@@ -1,9 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity_cadastro">
+    android:fillViewport="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background"
+        tools:context=".MainCadastro">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/id_text_util_cad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_title"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="45sp"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="40dp"
+            />
+
+        <TextView
+            android:id="@+id/id_text_cad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_cadastro2"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="35sp"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="110dp"
+            />
+
+        <TextView
+            android:id="@+id/id_text_cad_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_dados_cad"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="5dp"
+            app:layout_constraintTop_toBottomOf="@+id/id_text_cad"
+            />
+
+        <EditText
+            android:id="@+id/edit_nome_cad"
+            style="@style/Edit_Text_cad"
+            android:hint="@string/nome_hint"
+            android:inputType="textPersonName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/id_text_cad_2"
+            android:layout_marginTop="20dp"
+            android:drawableEnd="@drawable/ic_person"
+            android:importantForAutofill="no" />
+
+        <EditText
+            android:id="@+id/edit_mail_cad"
+            style="@style/Edit_Text_cad"
+            android:hint="@string/email_hint"
+            android:inputType="textEmailAddress"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_nome_cad"
+            android:layout_marginTop="15dp"
+            android:drawableEnd="@drawable/ic_mail"
+            android:importantForAutofill="no" />
+
+        <EditText
+            android:id="@+id/edit_pass_cad"
+            style="@style/Edit_Text_cad"
+            android:hint="@string/senha_cad_hint"
+            android:inputType="textPassword"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_mail_cad"
+            android:layout_marginTop="15dp"
+            android:drawableEnd="@drawable/ic_eye"
+            android:importantForAutofill="no" />
+
+        <EditText
+            android:id="@+id/edit_pass_cad2"
+            style="@style/Edit_Text_cad"
+            android:hint="@string/senha2_cad_hint"
+            android:inputType="textPassword"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_pass_cad"
+            android:layout_marginTop="15dp"
+            android:drawableEnd="@drawable/ic_eye"
+            android:importantForAutofill="no" />
+
+        <EditText
+            android:id="@+id/edit_address_cad"
+            style="@style/Edit_Text_cad"
+            android:hint="@string/address_hint"
+            android:inputType="textPersonName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_pass_cad2"
+            android:layout_marginTop="15dp"
+            android:drawableEnd="@drawable/ic_local"
+            android:importantForAutofill="no" />
+
+        <TextView
+            android:id="@+id/id_text_busca_cep"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_busca_cep"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="30sp"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/edit_address_cad"
+            android:layout_marginTop="15dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/id_button_cad"
+            style="@style/Button_concluir"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/id_text_busca_cep"
+            />
+
+        <TextView
+            android:id="@+id/id_text_versao_login_cad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_versao1"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/id_button_cad"
+            android:layout_marginTop="25dp"/>
+
+        <TextView
+            android:id="@+id/id_equip_login_cad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_equipe"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/id_text_versao_login_cad"/>
+
+
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

@@ -1,9 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity_login">
+    android:fillViewport="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background"
+        tools:context=".MainLogin">
+
+        <TextView
+            android:id="@+id/id_text_title_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_title"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="45sp"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="40dp"
+            />
+        <TextView
+            android:id="@+id/id_text_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_login"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="35sp"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="170dp"
+            />
+        <EditText
+            android:id="@+id/edit_mail"
+            style="@style/Edit_Text"
+            android:hint="@string/email_hint"
+            android:inputType="textEmailAddress"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/id_text_login"
+            android:layout_marginTop="20dp"
+            android:drawableEnd="@drawable/ic_mail"
+            android:importantForAutofill="no" />
+
+        <EditText
+            android:id="@+id/edit_pass"
+            style="@style/Edit_Text"
+            android:hint="@string/senha_hint"
+            android:inputType="textPassword"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_mail"
+            android:layout_marginTop="20dp"
+            android:drawableEnd="@drawable/ic_eye"
+            android:importantForAutofill="no" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/id_button"
+            style="@style/Button_login"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_pass"
+            />
+        <ProgressBar
+            android:id="@+id/id_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/id_button"
+            android:layout_marginTop="25dp"/>
+
+        <TextView
+            android:id="@+id/id_text_cadastro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_cadastro"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="35sp"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/id_bar"
+            android:layout_marginTop="30dp"
+            />
+        <TextView
+            android:id="@+id/id_text_versao_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_versao1"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/id_text_cadastro"
+            android:layout_marginTop="30dp"/>
+
+        <TextView
+            android:id="@+id/id_equip_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_equipe"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/id_text_versao_login"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

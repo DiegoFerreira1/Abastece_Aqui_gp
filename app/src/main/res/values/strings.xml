@@ -17,5 +17,5 @@
     <string name="senha_cad_hint">Informe sua senha</string>
     <string name="senha2_cad_hint">Confirme sua senha</string>
     <string name="address_hint">Endereço</string>
-    <string name="cep_hint">CEP</string>
+    <string name="text_busca_cep">Buscar CEP</string>
 </resources>
