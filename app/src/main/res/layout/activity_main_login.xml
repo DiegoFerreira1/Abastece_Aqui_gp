@@ -38,7 +38,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="170dp"
+            android:layout_marginTop="140dp"
             />
         <EditText
             android:id="@+id/edit_mail"
@@ -61,40 +61,65 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_mail"
             android:layout_marginTop="20dp"
-            android:drawableEnd="@drawable/ic_eye"
             android:importantForAutofill="no" />
 
+        <ImageView
+            android:id="@+id/id_ver_senha"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_eye"
+            app:layout_constraintStart_toStartOf="@id/edit_pass"
+            app:layout_constraintEnd_toEndOf="@id/edit_pass"
+            app:layout_constraintTop_toTopOf="@id/edit_pass"
+            android:layout_marginStart="280dp"
+            android:layout_marginTop="15dp"
+            android:contentDescription="@string/text_ver_senha" />
+
+        <CheckBox
+            android:id="@+id/id_checkbox"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="50dp"
+            app:layout_constraintTop_toBottomOf="@+id/edit_pass"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:text="@string/text_credenciais"
+            android:backgroundTint="@color/white"
+            />
+
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/id_button"
+            android:id="@+id/id_button_login"
             style="@style/Button_login"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_pass"
+            app:layout_constraintTop_toBottomOf="@+id/id_checkbox"
             />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/id_button_cadastro"
+            style="@style/Button_cadastro"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/id_button_login"
+
+            />
+
         <ProgressBar
             android:id="@+id/id_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/id_button"
-            android:layout_marginTop="25dp"/>
-
-        <TextView
-            android:id="@+id/id_text_cadastro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/text_cadastro"
-            android:textAlignment="center"
-            android:textStyle="bold"
-            android:textSize="35sp"
-            android:textColor="@color/white"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/id_bar"
-            android:layout_marginTop="30dp"
-            />
+            android:visibility="invisible"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            app:layout_constraintTop_toBottomOf="@+id/id_button_cadastro"
+            android:indeterminateTint="@color/white"
+            android:indeterminate="true"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_marginTop="15dp"/>
+
+
         <TextView
             android:id="@+id/id_text_versao_login"
             android:layout_width="match_parent"
@@ -104,8 +129,8 @@
             android:textStyle="bold"
             android:textSize="17sp"
             android:textColor="@color/white"
-            app:layout_constraintTop_toBottomOf="@id/id_text_cadastro"
-            android:layout_marginTop="30dp"/>
+            app:layout_constraintTop_toBottomOf="@id/id_bar"
+            android:layout_marginTop="20dp"/>
 
         <TextView
             android:id="@+id/id_equip_login"

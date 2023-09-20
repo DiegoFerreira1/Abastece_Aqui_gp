@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "6727591557",
+    "project_id": "abasteceaqui-8eea6",
+    "storage_bucket": "abasteceaqui-8eea6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:6727591557:android:a4a0b20f1a7b9647326bec",
+        "android_client_info": {
+          "package_name": "com.example.abasteceaqui"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmVrW7A7jkWUcOa8YpV6Z84A-PoNwFKwk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

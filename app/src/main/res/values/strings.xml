@@ -18,4 +18,6 @@
     <string name="senha2_cad_hint">Confirme sua senha</string>
     <string name="address_hint">Endereço</string>
     <string name="text_busca_cep">Buscar CEP</string>
+    <string name="text_credenciais">Salvar login</string>
+    <string name="text_ver_senha">senha</string>
 </resources>
