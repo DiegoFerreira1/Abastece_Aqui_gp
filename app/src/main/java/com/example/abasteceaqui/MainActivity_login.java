@@ -5,13 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -100,6 +104,39 @@ public class MainActivity_login extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity_login.this, MainActivity_cadastro.class );
                 startActivity(intent);
             }
+        });
+
+        ver_senha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(edt_senha.getTransformationMethod() instanceof PasswordTransformationMethod){
+                    edt_senha.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                } else {
+                    edt_senha.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+            }
+
+        });
+
+        check_login.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // Criação das preferências compartilhadas
+                SharedPreferences sharedPreferences = getSharedPreferences("user_login", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                if(isChecked){
+                    // Salvando os dados do usuário
+                    editor.putString("email", edt_mail.getText().toString());
+                    editor.putString("senha", edt_senha.getText().toString());
+                } else {
+                    // Limpando os dados do usuário
+                    editor.clear();
+                }
+
+                // Aplicando as alterações
+                editor.apply();
+            }
+
         });
 
     }
