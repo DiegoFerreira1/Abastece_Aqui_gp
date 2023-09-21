@@ -71,7 +71,7 @@
             app:layout_constraintStart_toStartOf="@id/edit_pass"
             app:layout_constraintEnd_toEndOf="@id/edit_pass"
             app:layout_constraintTop_toTopOf="@id/edit_pass"
-            android:layout_marginStart="280dp"
+            android:layout_marginStart="250dp"
             android:layout_marginTop="15dp"
             android:contentDescription="@string/text_ver_senha" />
 
