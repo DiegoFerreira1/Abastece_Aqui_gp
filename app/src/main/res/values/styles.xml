@@ -75,6 +75,33 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">30sp</item>
     </style>
+    <style name="Button_buscar_cep">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:layout_marginLeft">70dp</item>
+        <item name="android:layout_marginRight">70dp</item>
+        <item name="android:layout_marginTop">25dp</item>
+        <item name="android:background">@drawable/buttom</item>
+        <item name="android:text">@string/text_busca_cep</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="Button_insere_endereco">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:layout_marginLeft">70dp</item>
+        <item name="android:layout_marginRight">70dp</item>
+        <item name="android:layout_marginTop">25dp</item>
+        <item name="android:background">@drawable/buttom</item>
+        <item name="android:text">@string/insere_endereco</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
 
 
 

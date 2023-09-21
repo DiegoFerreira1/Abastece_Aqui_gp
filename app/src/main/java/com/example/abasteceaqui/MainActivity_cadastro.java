@@ -93,6 +93,15 @@ public class MainActivity_cadastro extends AppCompatActivity {
             }
         });
 
+        text_buscar_cep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity_cadastro.this, MainActivity_Cep.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
 
 
     }

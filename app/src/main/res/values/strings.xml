@@ -21,4 +21,11 @@
     <string name="text_credenciais">Salvar login</string>
     <string name="text_ver_senha">senha</string>
     <string name="text_sair">SAIR</string>
+    <string name="busca_cep_hint">Informe o numero do cep</string>
+    <string name="text_rua">Rua</string>
+    <string name="text_bairro">Bairro</string>
+    <string name="text_cidade">Cidade</string>
+    <string name="text_estado">Estado</string>
+    <string name="insere_endereco">Inserir endereço</string>
+
 </resources>
