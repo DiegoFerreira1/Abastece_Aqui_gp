@@ -50,7 +50,7 @@ public class MainActivity_cadastro extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     String[] mensagens = {"Preencha todos os campos", "Cadastro Realizado com Sucesso"};
-    String usuarioID;
+    String usuarioId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +134,7 @@ public class MainActivity_cadastro extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if (task.isSuccessful()) {
+                            SalvarDadosUser();
                             Snackbar snackbar = Snackbar.make(v, mensagens[1], Snackbar.LENGTH_SHORT);
                             snackbar.setBackgroundTint(Color.WHITE);
                             snackbar.setTextColor(Color.BLACK);
@@ -151,28 +152,33 @@ public class MainActivity_cadastro extends AppCompatActivity {
 
                         else {
 
-                            String erro;
-                            try {
-                                if (!FieldValidator.validate(senha, FieldValidator.TYPE_PASSWORD)) {
-                                    throw new Exception("A senha deve conter pelo menos um carácter minúsculo, um maiúsculo, um número e um carácter especial.");
-                                }
+                            if (!FieldValidator.validate(senha, FieldValidator.TYPE_PASSWORD)) {
+                                String erro = "A senha deve conter pelo menos um caractere minúsculo, um maiúsculo, um número e um caractere especial.";
+                                Snackbar snackbar = Snackbar.make(v, erro, Snackbar.LENGTH_SHORT);
+                                snackbar.setBackgroundTint(Color.WHITE);
+                                snackbar.setTextColor(Color.BLACK);
+                                snackbar.show();
+                            } else {
 
-                                // Tente criar o usuário ou alterar a senha no Firebase Auth aqui
-                                throw Objects.requireNonNull(task.getException());
-                            } catch (FirebaseAuthUserCollisionException e) {
-                                erro = "Email ja cadastrado.";
-                                Snackbar snackbar = Snackbar.make(v, erro, Snackbar.LENGTH_SHORT);
-                                snackbar.setBackgroundTint(Color.WHITE);
-                                snackbar.setTextColor(Color.BLACK);
-                                snackbar.show();
-                            } catch (FirebaseAuthInvalidCredentialsException e) {
-                                erro = "Email inválido.";
-                                Snackbar snackbar = Snackbar.make(v, erro, Snackbar.LENGTH_SHORT);
-                                snackbar.setBackgroundTint(Color.WHITE);
-                                snackbar.setTextColor(Color.BLACK);
-                                snackbar.show();
-                            } catch (Exception e) {
-                                erro = "A senha deve conter pelo menos um carácter minúsculo, um maiúsculo, um número e um carácter especial!";
+                                String erro;
+                                try {
+
+                                    throw task.getException();
+
+
+                                }catch (FirebaseAuthWeakPasswordException e) {
+                                    erro = "A senha deve conter no mínimo 6 caracteres";
+
+                                }catch (FirebaseAuthUserCollisionException e) {
+                                    erro = "Email ja cadastrado.";
+
+                                } catch (FirebaseAuthInvalidCredentialsException e) {
+                                    erro = "Email inválido.";
+
+                                } catch (Exception e) {
+                                    erro = "Erro ao cadastrar usuário";
+
+                                }
                                 Snackbar snackbar = Snackbar.make(v, erro, Snackbar.LENGTH_SHORT);
                                 snackbar.setBackgroundTint(Color.WHITE);
                                 snackbar.setTextColor(Color.BLACK);
@@ -196,35 +202,42 @@ public class MainActivity_cadastro extends AppCompatActivity {
 
     } // Esta é a chave de fechamento correta para o método CadastrarUsuarios
 
-    public void SalvarDadosUsuario(){
+    private void SalvarDadosUser(){
+
         String nome = edit_nome.getText().toString();
+        String email = edit_email.getText().toString();
+        String senha = edit_senha.getText().toString();
+        String senha2 = edit_senha2.getText().toString();
+        String endereco = edit_endereco.getText().toString();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         Map<String, Object> usuarios = new HashMap<>();
-
         usuarios.put("nome", nome);
+        usuarios.put("email", email);
+        usuarios.put("senha", senha);
+        usuarios.put("senha2", senha2);
+        usuarios.put("endereco", endereco);
 
-        usuarioID = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+        usuarioId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        DocumentReference documentReference = db.collection("Usuarios").document(usuarioID);
-
+        DocumentReference documentReference = db.collection("Usuarios").document(usuarioId);
         documentReference.set(usuarios).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
 
                         Log.d("db", "Sucesso ao salvar os dados");
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
 
-                        Log.d("db_error","Erro ao salvar os dados" + e.toString());
+                        Log.d("db_error", "Erro ao salvar os dados" + e.toString());
 
                     }
                 });
-
 
     }
 
