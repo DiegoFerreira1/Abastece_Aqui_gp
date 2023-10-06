@@ -9,10 +9,13 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -27,10 +30,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity_login extends AppCompatActivity {
 
     String[] mensagens = {"Preencha todos os campos!", "Usuário não cadastrado!"};
+    boolean salvarLogin = false; // Variável de controle para salvar o login
 
     private EditText edt_mail, edt_senha;
     private Button btn_login, btn_cadastro;
@@ -45,15 +50,12 @@ public class MainActivity_login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main_login);
 
-        mAuth = FirebaseAuth.getInstance();
-        edt_mail = findViewById(R.id.edit_mail);
-        edt_senha = findViewById(R.id.edit_pass);
-        btn_login = findViewById(R.id.id_button_login);
-        ver_senha = findViewById(R.id.id_ver_senha);
-        check_login = findViewById(R.id.id_checkbox);
-        LoginProgressBar = findViewById(R.id.id_bar);
+        IniciarComponentes();
 
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,35 +70,13 @@ public class MainActivity_login extends AppCompatActivity {
                     snackbar.show();
 
                 }else {
-                    if(!TextUtils.isEmpty(loginmail) || !TextUtils.isEmpty(loginsenha)){
-
-                        LoginProgressBar.setVisibility(View.VISIBLE);
-                        mAuth.signInWithEmailAndPassword(loginmail, loginsenha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()){
-                                    abrirTelaPrincipal();
-                                }else {
-                                    Snackbar snackbar = Snackbar.make(v, mensagens[1], Snackbar.LENGTH_SHORT);
-                                    snackbar.setBackgroundTint(Color.WHITE);
-                                    snackbar.setTextColor(Color.BLACK);
-                                    snackbar.show();
-                                    LoginProgressBar.setVisibility(View.INVISIBLE);
-
-                                }
-
-                            }
-                        });
-
-                    }
+                    AutenticarUsuario(v, loginmail, loginsenha);
 
                 }
 
             }
         });
 
-
-        IniciarComponentes();
 
         btn_cadastro.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,27 +98,41 @@ public class MainActivity_login extends AppCompatActivity {
 
         });
 
-        check_login.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                // Criação das preferências compartilhadas
-                SharedPreferences sharedPreferences = getSharedPreferences("user_login", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                if(isChecked){
-                    // Salvando os dados do usuário
-                    editor.putString("email", edt_mail.getText().toString());
-                    editor.putString("senha", edt_senha.getText().toString());
-                } else {
-                    // Limpando os dados do usuário
-                    editor.clear();
+    }
+
+
+    private void AutenticarUsuario(View v, String loginmail, String loginsenha) {
+        if(!TextUtils.isEmpty(loginmail) || !TextUtils.isEmpty(loginsenha)){
+
+            LoginProgressBar.setVisibility(View.VISIBLE);
+            mAuth.signInWithEmailAndPassword(loginmail, loginsenha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+
+                    if (task.isSuccessful()){
+                        LoginProgressBar.setVisibility(View.VISIBLE);
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                abrirTelaPrincipal();
+                            }
+                        }, 1500);
+
+                    }else {
+                        Snackbar snackbar = Snackbar.make(v, mensagens[1], Snackbar.LENGTH_SHORT);
+                        snackbar.setBackgroundTint(Color.WHITE);
+                        snackbar.setTextColor(Color.BLACK);
+                        snackbar.show();
+                        LoginProgressBar.setVisibility(View.INVISIBLE);
+
+                    }
+
                 }
+            });
 
-                // Aplicando as alterações
-                editor.apply();
-            }
-
-        });
-
+        }
     }
 
     private void abrirTelaPrincipal() {
@@ -148,6 +142,13 @@ public class MainActivity_login extends AppCompatActivity {
     }
 
     private void IniciarComponentes(){
+        mAuth = FirebaseAuth.getInstance();
+        edt_mail = findViewById(R.id.edit_mail);
+        edt_senha = findViewById(R.id.edit_pass);
+        btn_login = findViewById(R.id.id_button_login);
+        ver_senha = findViewById(R.id.id_ver_senha);
+        check_login = findViewById(R.id.id_checkbox);
+        LoginProgressBar = findViewById(R.id.id_bar);
         btn_cadastro = findViewById(R.id.id_button_cadastro);
     }
 
