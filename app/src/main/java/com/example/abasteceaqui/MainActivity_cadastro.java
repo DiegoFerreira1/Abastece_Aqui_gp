@@ -147,7 +147,7 @@ public class MainActivity_cadastro extends AppCompatActivity {
                                     startActivity(intent);
                                     finish();
                                 }
-                            }, 2000); // Atraso de 2000 milissegundos (2 segundos)
+                            }, 1500); // Atraso de 2000 milissegundos (2 segundos)
                         }
 
                         else {

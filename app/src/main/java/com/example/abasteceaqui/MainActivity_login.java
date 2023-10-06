@@ -14,6 +14,8 @@ import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -48,6 +50,9 @@ public class MainActivity_login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main_login);
 
         IniciarComponentes();
@@ -94,34 +99,7 @@ public class MainActivity_login extends AppCompatActivity {
         });
 
 
-
-        check_login.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                salvarLogin = isChecked; // Atualiza a variável de controle com o estado do CheckBox
-
-                if(isChecked){
-                    onStart();
-                }
-            }
-        });
-
-
     }
-    @Override
-    protected void onStart() {
-
-        super.onStart();
-        FirebaseUser usuarioAtual = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (usuarioAtual != null || salvarLogin) { // Verifica se o CheckBox está marcado antes de salvar o login
-            abrirTelaPrincipal(); // Chama a função para salvar o login
-        }
-    }
-
-
-
-
-
 
 
     private void AutenticarUsuario(View v, String loginmail, String loginsenha) {
@@ -140,7 +118,7 @@ public class MainActivity_login extends AppCompatActivity {
                             public void run() {
                                 abrirTelaPrincipal();
                             }
-                        }, 2000);
+                        }, 1500);
 
                     }else {
                         Snackbar snackbar = Snackbar.make(v, mensagens[1], Snackbar.LENGTH_SHORT);
