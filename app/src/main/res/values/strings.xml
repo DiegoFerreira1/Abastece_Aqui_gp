@@ -27,5 +27,12 @@
     <string name="text_cidade">Cidade</string>
     <string name="text_estado">Estado</string>
     <string name="insere_endereco">Inserir endereço</string>
+    <string name="perto_de_mim">Perto de Mim</string>
+    <string name="combust_veis">Buscar</string>
+    <string name="perfil">Perfil</string>
+    <string name="postos">Postos</string>
+    <string name="sair">sair</string>
+    <string name="adicionar_posto_de_gasolina">Adicionar Posto de Gasolina</string>
+    <string name="digite_o_nome_da_cidade">Digite o nome da cidade</string>
 
 </resources>
