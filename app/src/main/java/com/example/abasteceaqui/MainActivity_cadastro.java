@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -18,6 +19,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.abasteceaqui.tools.FieldValidator;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,6 +37,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.ktx.Firebase;
 
 import java.net.PasswordAuthentication;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -56,6 +62,10 @@ public class MainActivity_cadastro extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_cadastro);
+
+
+        StrictMode.ThreadPolicy threadPolicy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(threadPolicy);
 
         IniciarComponentes();
 
@@ -122,9 +132,12 @@ public class MainActivity_cadastro extends AppCompatActivity {
 
     private void CadastrarUsuario(View v) {
 
+        String nome = edit_nome.getText().toString();
         String email = edit_email.getText().toString();
         String senha = edit_senha.getText().toString();
         String senha2 = edit_senha2.getText().toString();
+        String endereco = edit_endereco.getText().toString();
+
 
         if(senha.equals(senha2)){
 
@@ -134,7 +147,9 @@ public class MainActivity_cadastro extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if (task.isSuccessful()) {
-                            SalvarDadosUser();
+
+                            SalvarDadosUser(nome, email, senha, endereco);
+
                             Snackbar snackbar = Snackbar.make(v, mensagens[1], Snackbar.LENGTH_SHORT);
                             snackbar.setBackgroundTint(Color.WHITE);
                             snackbar.setTextColor(Color.BLACK);
@@ -202,44 +217,49 @@ public class MainActivity_cadastro extends AppCompatActivity {
 
     } // Esta é a chave de fechamento correta para o método CadastrarUsuarios
 
-    private void SalvarDadosUser(){
+    private void SalvarDadosUser(String nome_usuario, String email, String senha, String endereco) {
+        try {
+            String jdbcUrl = "jdbc:postgresql://motty.db.elephantsql.com:5432/pxkwtvhx";
+            String username = "pxkwtvhx";
+            String password = "ntKLofOzuo3q38PH8uKHzzeLzIOBaSVH";
 
-        String nome = edit_nome.getText().toString();
-        String email = edit_email.getText().toString();
-        String senha = edit_senha.getText().toString();
-        String senha2 = edit_senha2.getText().toString();
-        String endereco = edit_endereco.getText().toString();
+            // Estabelecer a conexão com o banco de dados
+            Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+            // Preparar uma declaração SQL para a inserção de dados do usuário
+            String sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, nome_usuario);
+            preparedStatement.setString(2, email);
+            preparedStatement.setString(3, senha);
 
-        Map<String, Object> usuarios = new HashMap<>();
-        usuarios.put("nome", nome);
-        usuarios.put("email", email);
-        usuarios.put("senha", senha);
-        usuarios.put("senha2", senha2);
-        usuarios.put("endereco", endereco);
+            // Executar a inserção de dados do usuário
+            int rowsAffectedUser = preparedStatement.executeUpdate();
 
-        usuarioId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            // Preparar uma declaração SQL para a inserção de dados de endereço
+            String sql2 = "INSERT INTO addresses (address) VALUES (?)";
+            PreparedStatement preparedStatement2 = connection.prepareStatement(sql2);
+            preparedStatement2.setString(1, endereco);
 
-        DocumentReference documentReference = db.collection("Usuarios").document(usuarioId);
-        documentReference.set(usuarios).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
+            // Executar a inserção de dados de endereço
+            int rowsAffectedAddress = preparedStatement2.executeUpdate();
 
-                        Log.d("db", "Sucesso ao salvar os dados");
+            // Verificar se ambas as inserções foram bem-sucedidas
+            if (rowsAffectedUser > 0 && rowsAffectedAddress > 0) {
+                Toast.makeText(MainActivity_cadastro.this, "Dados inseridos com sucesso.", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(MainActivity_cadastro.this, "Falha ao inserir dados.", Toast.LENGTH_SHORT).show();
+            }
 
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
+            // Fechar a conexão com o banco de dados
+            connection.close();
 
-                        Log.d("db_error", "Erro ao salvar os dados" + e.toString());
-
-                    }
-                });
-
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(e.getMessage());
+        }
     }
+
 
 }
 
