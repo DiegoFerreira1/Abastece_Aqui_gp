@@ -67,7 +67,7 @@
             android:id="@+id/id_ver_senha"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/ic_eye"
+            android:src="@drawable/ic_eye_pass"
             app:layout_constraintStart_toStartOf="@id/edit_pass"
             app:layout_constraintEnd_toEndOf="@id/edit_pass"
             app:layout_constraintTop_toTopOf="@id/edit_pass"
@@ -116,31 +116,38 @@
             app:layout_constraintTop_toBottomOf="@+id/id_button_cadastro"
             android:indeterminateTint="@color/white"
             android:indeterminate="true"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            style="@style/Widget.AppCompat.ProgressBar"
             android:layout_marginTop="15dp"/>
 
 
-        <TextView
-            android:id="@+id/id_text_versao_login"
+        <LinearLayout
+            android:id="@+id/ll_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/text_versao1"
-            android:textAlignment="center"
-            android:textStyle="bold"
-            android:textSize="17sp"
-            android:textColor="@color/white"
-            app:layout_constraintTop_toBottomOf="@id/id_bar"
-            android:layout_marginTop="20dp"/>
+            android:layout_alignParentBottom="true"
+            android:background="#33000000"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent">
 
-        <TextView
-            android:id="@+id/id_equip_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/text_equipe"
-            android:textAlignment="center"
-            android:textSize="16sp"
-            android:textColor="@color/white"
-            app:layout_constraintTop_toBottomOf="@id/id_text_versao_login"/>
+            <TextView
+                android:id="@+id/txt_versao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/text_versao1"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/txt_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:text="@string/text_equipe"
+                android:textAlignment="center"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
