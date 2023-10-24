@@ -34,5 +34,20 @@
     <string name="sair">sair</string>
     <string name="adicionar_posto_de_gasolina">Adicionar Posto de Gasolina</string>
     <string name="digite_o_nome_da_cidade">Digite o nome da cidade</string>
+    <string name="dados_posto">Informe os dados do posto</string>
+    <string name="nome">Nome</string>
+    <string name="valor_gasolina">Preço Gasolina</string>
+    <string name="valor_alcool">Preço Alcool</string>
+    <string name="pre_o_diesel">Preço Diesel</string>
+    <string name="todo">TODO\n</string>
+    <string name="buscar_cidade">Buscar cidade</string>
+    <string name="go">GO</string>
+    <string name="gasolina_comum">Gasolina Comum</string>
+    <string name="gasolina_aditivada">Gasolina Aditivada</string>
+    <string name="gas_natural">Gas Natural</string>
+    <string name="etanol">Etanol</string>
+    <string name="valor">valor</string>
+    <string name="diesel_comum">Diesel Comum</string>
+    <string name="diesel_s10">Diesel S10</string>
 
 </resources>

@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -17,7 +18,9 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.abasteceaqui.tools.FieldValidator;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,18 +38,20 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.ktx.Firebase;
 
 import java.net.PasswordAuthentication;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 public class MainActivity_cadastro extends AppCompatActivity {
-
     private EditText edit_nome, edit_email, edit_senha, edit_senha2, edit_endereco;
     private Button bt_cadastrar;
-
     private ImageView ver_senha_cad;
 
-    private TextView text_buscar_cep;
 
     private FirebaseAuth mAuth;
     String[] mensagens = {"Preencha todos os campos", "Cadastro Realizado com Sucesso"};
@@ -56,6 +61,10 @@ public class MainActivity_cadastro extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_cadastro);
+
+
+        StrictMode.ThreadPolicy threadPolicy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(threadPolicy);
 
         IniciarComponentes();
 
@@ -92,20 +101,9 @@ public class MainActivity_cadastro extends AppCompatActivity {
                 }
             }
         });
+    } //Fim do OnCreate
 
-        text_buscar_cep.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity_cadastro.this, MainActivity_Cep.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-
-
-    }
-
+    //Metodo para iniciar todos os componentes referenciados no xml
     private void IniciarComponentes() {
 
         FirebaseAuth.getInstance();
@@ -116,29 +114,32 @@ public class MainActivity_cadastro extends AppCompatActivity {
         edit_senha2 = findViewById(R.id.edit_pass_cad2);
         edit_endereco = findViewById(R.id.edit_address_cad);
         bt_cadastrar = findViewById(R.id.id_button_cad);
-        text_buscar_cep = findViewById(R.id.id_text_busca_cep);
         ver_senha_cad = findViewById(R.id.id_ver_senha_cad);
+
     }
 
+    // Metodo para cadastrar o usuario no firebase com verificação da senha
     private void CadastrarUsuario(View v) {
-
+        String nome = edit_nome.getText().toString();
         String email = edit_email.getText().toString();
         String senha = edit_senha.getText().toString();
         String senha2 = edit_senha2.getText().toString();
+        String endereco = edit_endereco.getText().toString();
 
         if(senha.equals(senha2)){
-
-
                 FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if (task.isSuccessful()) {
-                            SalvarDadosUser();
+
+                            SalvarDadosUser(nome, email, senha, endereco);
+
                             Snackbar snackbar = Snackbar.make(v, mensagens[1], Snackbar.LENGTH_SHORT);
                             snackbar.setBackgroundTint(Color.WHITE);
                             snackbar.setTextColor(Color.BLACK);
                             snackbar.show();
+
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
@@ -147,7 +148,7 @@ public class MainActivity_cadastro extends AppCompatActivity {
                                     startActivity(intent);
                                     finish();
                                 }
-                            }, 1500); // Atraso de 2000 milissegundos (2 segundos)
+                            }, 1500); // Atraso de 1500 milissegundos (1.5 segundos)
                         }
 
                         else {
@@ -164,7 +165,6 @@ public class MainActivity_cadastro extends AppCompatActivity {
                                 try {
 
                                     throw task.getException();
-
 
                                 }catch (FirebaseAuthWeakPasswordException e) {
                                     erro = "A senha deve conter no mínimo 6 caracteres";
@@ -189,8 +189,6 @@ public class MainActivity_cadastro extends AppCompatActivity {
                     }
                 }); // Esta é a chave de fechamento correta para o método addOnCompleteListener
 
-
-
             }else {
             String erro = "As senhas não conferem!";
             Snackbar snackbar = Snackbar.make(v, erro, Snackbar.LENGTH_SHORT);
@@ -199,47 +197,64 @@ public class MainActivity_cadastro extends AppCompatActivity {
             snackbar.show();
         }
 
-
     } // Esta é a chave de fechamento correta para o método CadastrarUsuarios
 
-    private void SalvarDadosUser(){
 
-        String nome = edit_nome.getText().toString();
-        String email = edit_email.getText().toString();
-        String senha = edit_senha.getText().toString();
-        String senha2 = edit_senha2.getText().toString();
-        String endereco = edit_endereco.getText().toString();
+    //Metodo para salvar todos os dados no banco de dados relacional
+    private void SalvarDadosUser(String nome_usuario, String email, String senha, String endereco) {
+        try {
+            String jdbcUrl = "jdbc:postgresql://motty.db.elephantsql.com:5432/pxkwtvhx";
+            String username = "pxkwtvhx";
+            String password = "ntKLofOzuo3q38PH8uKHzzeLzIOBaSVH";
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+            // Estabelecer a conexão com o banco de dados
+            Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
 
-        Map<String, Object> usuarios = new HashMap<>();
-        usuarios.put("nome", nome);
-        usuarios.put("email", email);
-        usuarios.put("senha", senha);
-        usuarios.put("senha2", senha2);
-        usuarios.put("endereco", endereco);
+            // Desativar o autocommit para iniciar uma transação explícita
+            connection.setAutoCommit(false);
 
-        usuarioId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            // Preparar uma declaração SQL para a inserção de dados do usuário
+            String sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, nome_usuario);
+            preparedStatement.setString(2, email);
+            preparedStatement.setString(3, senha);
 
-        DocumentReference documentReference = db.collection("Usuarios").document(usuarioId);
-        documentReference.set(usuarios).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
+            // Executar a inserção de dados do usuário
+            int rowsAffectedUser = preparedStatement.executeUpdate();
 
-                        Log.d("db", "Sucesso ao salvar os dados");
+            // Preparar uma declaração SQL para a inserção de dados de endereço
+            String sql2 = "INSERT INTO addresses (address) VALUES (?)";
+            PreparedStatement preparedStatement2 = connection.prepareStatement(sql2);
+            preparedStatement2.setString(1, endereco);
 
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
+            // Executar a inserção de dados de endereço
+            int rowsAffectedAddress = preparedStatement2.executeUpdate();
 
-                        Log.d("db_error", "Erro ao salvar os dados" + e.toString());
+            // Verificar se ambas as inserções foram bem-sucedidas
+            if (rowsAffectedUser > 0 && rowsAffectedAddress > 0) {
+                // Confirmar a transação
+                connection.commit();
+                Toast.makeText(MainActivity_cadastro.this, "Dados inseridos com sucesso.", Toast.LENGTH_SHORT).show();
+            } else {
+                // Reverter a transação em caso de falha
+                connection.rollback();
+                Toast.makeText(MainActivity_cadastro.this, "Falha ao inserir dados.", Toast.LENGTH_SHORT).show();
+            }
 
-                    }
-                });
+            // Fechar a conexão com o banco de dados
+            connection.close();
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println(e.getMessage());
+        }
     }
+
+
+
+
+
 
 }
 

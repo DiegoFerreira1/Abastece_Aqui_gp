@@ -45,7 +45,7 @@
             android:id="@+id/id_text_cad_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/text_dados_cad"
+            android:text="@string/dados_posto"
             android:textAlignment="center"
             android:textStyle="bold"
             android:textSize="18sp"
@@ -57,9 +57,9 @@
             />
 
         <EditText
-            android:id="@+id/edit_nome_cad"
+            android:id="@+id/edit_nome_posto"
             style="@style/Edit_Text_cad"
-            android:hint="@string/nome_hint"
+            android:hint="@string/nome"
             android:inputType="textPersonName"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -69,113 +69,59 @@
             android:importantForAutofill="no" />
 
         <EditText
-            android:id="@+id/edit_mail_cad"
-            style="@style/Edit_Text_cad"
-            android:hint="@string/email_hint"
-            android:inputType="textEmailAddress"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_nome_cad"
-            android:layout_marginTop="15dp"
-            android:drawableEnd="@drawable/ic_mail"
-            android:importantForAutofill="no" />
-
-        <EditText
-            android:id="@+id/edit_pass_cad"
-            style="@style/Edit_Text_cad"
-            android:hint="@string/senha_cad_hint"
-            android:inputType="textPassword"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_mail_cad"
-            android:layout_marginTop="15dp"
-
-            android:importantForAutofill="no" />
-        <ImageView
-            android:id="@+id/id_ver_senha_cad"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_eye_pass"
-            app:layout_constraintStart_toStartOf="@id/edit_pass_cad"
-            app:layout_constraintEnd_toEndOf="@id/edit_pass_cad"
-            app:layout_constraintTop_toTopOf="@id/edit_pass_cad"
-            android:layout_marginStart="250dp"
-            android:layout_marginTop="10dp"
-            android:contentDescription="@string/text_ver_senha" />
-
-        <EditText
-            android:id="@+id/edit_pass_cad2"
-            style="@style/Edit_Text_cad"
-            android:hint="@string/senha2_cad_hint"
-            android:inputType="textPassword"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_pass_cad"
-            android:layout_marginTop="15dp"
-            android:importantForAutofill="no" />
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_eye_pass"
-            app:layout_constraintStart_toStartOf="@id/edit_pass_cad2"
-            app:layout_constraintEnd_toEndOf="@id/edit_pass_cad2"
-            app:layout_constraintTop_toTopOf="@id/edit_pass_cad2"
-            android:layout_marginStart="250dp"
-            android:layout_marginTop="10dp"
-            android:contentDescription="@string/text_ver_senha" />
-
-        <EditText
-            android:id="@+id/edit_address_cad"
+            android:id="@+id/edit_address_posto"
             style="@style/Edit_Text_cad"
             android:hint="@string/address_hint"
             android:inputType="textPersonName"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_pass_cad2"
+            app:layout_constraintTop_toBottomOf="@id/edit_nome_posto"
+            android:layout_marginTop="15dp"
+            android:drawableEnd="@drawable/ic_local"
+            android:importantForAutofill="no" />
+        <EditText
+            android:id="@+id/edit_gasolina"
+            style="@style/Edit_Text_cad"
+            android:hint="@string/valor_gasolina"
+            android:inputType="numberDecimal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_address_posto"
+            android:layout_marginTop="15dp"
+            android:drawableEnd="@drawable/ic_local"
+            android:importantForAutofill="no" />
+        <EditText
+            android:id="@+id/edit_alcool"
+            style="@style/Edit_Text_cad"
+            android:hint="@string/valor_alcool"
+            android:inputType="numberDecimal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_gasolina"
+            android:layout_marginTop="15dp"
+            android:drawableEnd="@drawable/ic_local"
+            android:importantForAutofill="no" />
+        <EditText
+            android:id="@+id/edit_diesel"
+            style="@style/Edit_Text_cad"
+            android:hint="@string/pre_o_diesel"
+            android:inputType="numberDecimal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_alcool"
             android:layout_marginTop="15dp"
             android:drawableEnd="@drawable/ic_local"
             android:importantForAutofill="no" />
 
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/id_button_cad"
+            android:id="@+id/id_button_posto"
             style="@style/Button_concluir"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@id/edit_address_cad"/>
-
-
-
-
-        <LinearLayout
-            android:id="@+id/ll_info"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="#33000000"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <TextView
-                android:id="@+id/txt_versao"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="@string/text_versao1"
-                android:textColor="@color/white" />
-
-            <TextView
-                android:id="@+id/txt_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="6dp"
-                android:text="@string/text_equipe"
-                android:textAlignment="center"
-                android:textColor="@color/white" />
-
-        </LinearLayout>
+            app:layout_constraintTop_toBottomOf="@id/edit_diesel"
+            />
 
 
 

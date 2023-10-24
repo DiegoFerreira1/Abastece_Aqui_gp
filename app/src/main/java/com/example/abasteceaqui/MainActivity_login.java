@@ -33,10 +33,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity_login extends AppCompatActivity {
-
     String[] mensagens = {"Preencha todos os campos!", "Usuário não cadastrado!"};
     boolean salvarLogin = false; // Variável de controle para salvar o login
-
     private EditText edt_mail, edt_senha;
     private Button btn_login, btn_cadastro;
     private ImageView ver_senha;
@@ -44,7 +42,6 @@ public class MainActivity_login extends AppCompatActivity {
     private ProgressBar LoginProgressBar;
 
     private FirebaseAuth mAuth;
-
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -136,7 +133,7 @@ public class MainActivity_login extends AppCompatActivity {
     }
 
     private void abrirTelaPrincipal() {
-        Intent intent = new Intent(MainActivity_login.this, MainActivity.class);
+        Intent intent = new Intent(MainActivity_login.this, MainActivity_Map.class);
         startActivity(intent);
         finish();
     }
