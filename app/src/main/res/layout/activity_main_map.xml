@@ -62,7 +62,7 @@
         android:id="@+id/id_nome_posto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nome do posto"
+        android:text=""
         android:textSize="16sp"
         android:textStyle="bold"
         android:textAlignment="center"
@@ -147,17 +147,30 @@
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/id_etanol" />
 
-    <ImageView
-        android:id="@+id/id_favorite"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="20dp"
-        android:contentDescription="@string/todo"
-        android:src="@drawable/ic_favorite"
-        app:layout_constraintTop_toBottomOf="@id/id_valor_etanol"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
+    <TextView
+        android:id="@+id/id_gasNatural"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/gas_natural"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
- />
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/id_valor_etanol" />
+
+    <TextView
+        android:id="@+id/id_valor_gasNatural"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/valor"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/id_gasNatural" />
 
 
     <TextView
