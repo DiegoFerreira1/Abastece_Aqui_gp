@@ -171,6 +171,9 @@ public class MainActivity_Map extends AppCompatActivity {
                             if (postoInfo.getNomeFantasia().equals(title)) {
                                 // O nome do posto associado ao marcador é igual ao nome obtido do título do marcador
                                 // Agora você pode acessar as informações do posto e atualizar os campos de texto
+
+                                // Usar payload utilizando o objeto e usar um get unico e receber o json (Refatorar)
+
                                 String precoGasolinaComum = postoInfo.getPrecoGasolinaComum();
                                 String precoGasolinaAditivada = postoInfo.getPrecoGasolinaAditivada();
                                 String precoEtanol = postoInfo.getPrecoEtanol();
