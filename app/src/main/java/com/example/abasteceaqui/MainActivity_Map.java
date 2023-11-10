@@ -57,8 +57,8 @@ public class MainActivity_Map extends AppCompatActivity {
     private MapView mapView;
     private MyLocationNewOverlay myLocationOverlay;
     private ImageButton bt_busca_cidade;
-    private ImageView bt_exit;
-    private Button bt_go, bt_favorite;
+    private ImageView bt_exit, bt_go;
+    private Button bt_favorite;
     private static final int REQUEST_LOCATION_PERMISSION = 1;
     private FirebaseAuth mAuth;
     private TextView gasolina_comum, gasolina_aditivada, etanol, diesel_comum, diesel_s10, gas_natural, nome_posto;
@@ -101,7 +101,6 @@ public class MainActivity_Map extends AppCompatActivity {
                 finish();
             }
         });
-
 
         // Inicializar o mapa
         Configuration.getInstance().load(getApplicationContext(), getPreferences(MODE_PRIVATE));
@@ -147,93 +146,24 @@ public class MainActivity_Map extends AppCompatActivity {
             }
         });
 
-        // Suponha que você já adicionou os marcadores usando o método adicionarMarcadorNoMapa
+        // Codigo da marcação refatorado
 
         for (Overlay overlay : mapView.getOverlays()) {
             if (overlay instanceof Marker) {
                 final Marker marker = (Marker) overlay;
 
-                // Evento para exibir informações do posto
                 marker.setOnMarkerClickListener(new Marker.OnMarkerClickListener() {
-                    // Capture as informações do marcador
                     @Override
                     public boolean onMarkerClick(Marker marker, MapView mapView) {
-                        marker.showInfoWindow();
-
-                        // Capture as informações do marcador
-                        String title = marker.getTitle();
-                        nome_posto.setText(title);
-
-                        PostoInfo postoInfo = (PostoInfo) marker.getRelatedObject();
-
-                        if (postoInfo != null) {
-
-                            if (postoInfo.getNomeFantasia().equals(title)) {
-                                // O nome do posto associado ao marcador é igual ao nome obtido do título do marcador
-                                // Agora você pode acessar as informações do posto e atualizar os campos de texto
-
-                                // Usar payload utilizando o objeto e usar um get unico e receber o json (Refatorar)
-
-                                String precoGasolinaComum = postoInfo.getPrecoGasolinaComum();
-                                String precoGasolinaAditivada = postoInfo.getPrecoGasolinaAditivada();
-                                String precoEtanol = postoInfo.getPrecoEtanol();
-                                String precoDieselComum = postoInfo.getPrecoDieselComum();
-                                String precoDieselS10 = postoInfo.getPrecoDieselS10();
-                                String precoGasNatural = postoInfo.getPrecoGasNatural();
-
-                                // Atualize os campos de texto com as informações do posto
-                                gasolina_comum.setText(precoGasolinaComum);
-                                gasolina_aditivada.setText(precoGasolinaAditivada);
-                                etanol.setText(precoEtanol);
-                                diesel_comum.setText(precoDieselComum);
-                                diesel_s10.setText(precoDieselS10);
-                                gas_natural.setText(precoGasNatural);
-                            }
-                        }
-
-
-                        //Botao para iniciar navegação
-                        bt_go = findViewById(R.id.button_go);
-                        // Defina o OnClickListener para o botão "Go" apos pegar pontos de origem e destino
-                        bt_go.setOnClickListener(new View.OnClickListener() {
-                            final double markerLatitude = marker.getPosition().getLatitude();
-                            final double markerLongitude = marker.getPosition().getLongitude();
-
-                            @Override
-                            public void onClick(View v) {
-                                // Quando o botão "Go" é pressionado, crie um Intent para abrir a MainActivity_navigation
-                                Intent intent = new Intent(MainActivity_Map.this, MainActivity_navigation.class);
-                                // Adicione as coordenadas de origem (sua localização) e destino (marcador) como extras no Intent
-
-                                intent.putExtra("destinationLatitude", markerLatitude);
-                                intent.putExtra("destinationLongitude", markerLongitude);
-
-                                Log.d("pontoLat", String.valueOf(markerLatitude));
-                                Log.d("pontoLong", String.valueOf(markerLongitude));
-
-
-                                Location location = myLocationOverlay.getLastFix();
-                                if (location != null) {
-                                    double latitude = location.getLatitude();
-                                    double longitude = location.getLongitude();
-
-                                    // Adicione as coordenadas de origem (latitude e longitude) como extras no Intent
-                                    intent.putExtra("originLatitude", latitude);
-                                    intent.putExtra("originLongitude", longitude);
-
-                                }
-                                // Inicie a MainActivity_navigation para exibir a WebView para navegação
-                                startActivity(intent);
-                            }
-
-                        });
-
-                        return true; // Retorna true para indicar que o evento foi tratado
+                        showMarkerInfo(marker);
+                        configureNavigationButton(marker);
+                        return true; // Indica que o evento foi tratado
                     }
                 });
             }
+        }
 
-        }//Fim do clique no marcador
+
 
 
     }//Fim do metodo OnCreate
@@ -344,8 +274,6 @@ public class MainActivity_Map extends AppCompatActivity {
         }
     }
 
-
-
     private void iniciarComponentes() {
         gasolina_comum = findViewById(R.id.id_valor_comum);
         gasolina_aditivada = findViewById(R.id.id_valor_adt);
@@ -356,6 +284,61 @@ public class MainActivity_Map extends AppCompatActivity {
         nome_posto = findViewById(R.id.id_nome_posto);
 
     }
+
+    // Método para exibir informações do posto
+    private void showMarkerInfo(Marker marker) {
+        marker.showInfoWindow();
+        String title = marker.getTitle();
+        nome_posto.setText(title);
+
+        PostoInfo postoInfo = (PostoInfo) marker.getRelatedObject();
+
+        if (postoInfo != null && postoInfo.getNomeFantasia().equals(title)) {
+            updateTextFields(postoInfo);
+        }
+    }
+
+    // Método para atualizar os campos de texto com as informações do posto
+    private void updateTextFields(PostoInfo postoInfo) {
+        gasolina_comum.setText(postoInfo.getPrecoGasolinaComum());
+        gasolina_aditivada.setText(postoInfo.getPrecoGasolinaAditivada());
+        etanol.setText(postoInfo.getPrecoEtanol());
+        diesel_comum.setText(postoInfo.getPrecoDieselComum());
+        diesel_s10.setText(postoInfo.getPrecoDieselS10());
+        gas_natural.setText(postoInfo.getPrecoGasNatural());
+    }
+
+    // Método para configurar o botão de navegação
+    private void configureNavigationButton(Marker marker) {
+        bt_go = findViewById(R.id.button_go);
+
+        bt_go.setOnClickListener(new View.OnClickListener() {
+            final double markerLatitude = marker.getPosition().getLatitude();
+            final double markerLongitude = marker.getPosition().getLongitude();
+
+            @Override
+            public void onClick(View v) {
+                startNavigation(markerLatitude, markerLongitude);
+            }
+        });
+    }
+
+    // Método para iniciar a navegação
+    private void startNavigation(double destinationLatitude, double destinationLongitude) {
+        Intent intent = new Intent(MainActivity_Map.this, MainActivity_navigation.class);
+
+        intent.putExtra("destinationLatitude", destinationLatitude);
+        intent.putExtra("destinationLongitude", destinationLongitude);
+
+        Location location = myLocationOverlay.getLastFix();
+        if (location != null) {
+            intent.putExtra("originLatitude", location.getLatitude());
+            intent.putExtra("originLongitude", location.getLongitude());
+        }
+
+        startActivity(intent);
+    }
+
 }
 
 
