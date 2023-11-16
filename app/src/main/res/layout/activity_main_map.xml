@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.core.widget.NestedScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity_Map">
+    android:fillViewport="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity_Map">
 
     <View
         android:id="@+id/id_view_map"
@@ -62,7 +66,7 @@
         android:id="@+id/id_nome_posto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nome do posto"
+        android:text=""
         android:textSize="16sp"
         android:textStyle="bold"
         android:textAlignment="center"
@@ -75,11 +79,10 @@
         android:id="@+id/id_gas_comum"
         android:layout_width="115dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
         android:text="@string/gasolina_comum"
+        android:textAlignment="center"
         android:textSize="15sp"
         android:textStyle="bold"
-        android:textAlignment="center"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/id_nome_posto" />
@@ -101,11 +104,10 @@
         android:id="@+id/id_gas_adt"
         android:layout_width="125dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
         android:text="@string/gasolina_aditivada"
+        android:textAlignment="center"
         android:textSize="15sp"
         android:textStyle="bold"
-        android:textAlignment="center"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/id_nome_posto" />
@@ -126,11 +128,10 @@
         android:id="@+id/id_etanol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
         android:text="@string/etanol"
+        android:textAlignment="center"
         android:textSize="15sp"
         android:textStyle="bold"
-        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/id_nome_posto" />
@@ -147,17 +148,30 @@
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/id_etanol" />
 
-    <ImageView
-        android:id="@+id/id_favorite"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="20dp"
-        android:contentDescription="@string/todo"
-        android:src="@drawable/ic_favorite"
-        app:layout_constraintTop_toBottomOf="@id/id_valor_etanol"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
+    <TextView
+        android:id="@+id/id_gasNatural"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/gas_natural"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
- />
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/id_valor_etanol" />
+
+    <TextView
+        android:id="@+id/id_valor_gasNatural"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/valor"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/id_gasNatural" />
 
 
     <TextView
@@ -209,20 +223,9 @@
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/id_diesel_s10"/>
 
-
-    <Button
-        android:id="@+id/button_go"
-        style="@style/Widget.Material3.Button"
-        android:layout_width="70dp"
-        android:layout_height="65dp"
-        android:text="@string/go"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <View
-        android:id="@+id/view"
-        style="@style/Container_left"
+        android:id="@+id/view_principal"
+        style="@style/Container_baixo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         />
@@ -231,58 +234,59 @@
         android:id="@+id/id_postos"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginStart="-85dp"
         android:contentDescription="@string/todo"
         android:src="@drawable/ic_gas"
-        app:layout_constraintBottom_toBottomOf="@id/view"
-        app:layout_constraintEnd_toEndOf="@id/view"
-        app:layout_constraintStart_toStartOf="@id/view"
-        app:layout_constraintTop_toTopOf="@+id/view" />
+        android:layout_marginStart="30dp"
+        app:layout_constraintBottom_toBottomOf="@id/view_principal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view_principal" />
 
     <ImageView
         android:id="@+id/id_custo"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginStart="60dp"
         android:contentDescription="@string/todo"
         android:src="@drawable/ic_custo"
-        app:layout_constraintBottom_toBottomOf="@id/view"
-        app:layout_constraintEnd_toEndOf="@id/view"
-        app:layout_constraintStart_toStartOf="@id/view"
-        app:layout_constraintTop_toTopOf="@+id/view" />
-
-
-
-    <View
-        android:id="@+id/view2"
-        style="@style/Container_right"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
-
-    <ImageView
-        android:id="@+id/id_sair"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="85dp"
-        android:contentDescription="@string/todo"
-        android:src="@drawable/ic_loggout"
-        app:layout_constraintBottom_toBottomOf="@id/view2"
-        app:layout_constraintEnd_toEndOf="@id/view2"
-        app:layout_constraintStart_toStartOf="@id/view2"
-        app:layout_constraintTop_toTopOf="@+id/view2" />
+        android:layout_marginStart="30dp"
+        app:layout_constraintBottom_toBottomOf="@id/view_principal"
+        app:layout_constraintStart_toEndOf="@+id/id_postos"
+        app:layout_constraintTop_toTopOf="@+id/view_principal" />
 
     <ImageView
         android:id="@+id/id_perfil"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginStart="-60dp"
         android:contentDescription="@string/todo"
+        android:layout_marginStart="30dp"
         android:src="@drawable/ic_person"
-        app:layout_constraintBottom_toBottomOf="@id/view2"
-        app:layout_constraintEnd_toEndOf="@id/view2"
-        app:layout_constraintStart_toStartOf="@id/view2"
-        app:layout_constraintTop_toTopOf="@+id/view2" />
+        app:layout_constraintBottom_toBottomOf="@id/view_principal"
+        app:layout_constraintStart_toEndOf="@+id/id_custo"
+        app:layout_constraintTop_toTopOf="@+id/view_principal" />
+
+    <ImageView
+        android:id="@+id/button_go"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:contentDescription="@string/todo"
+        android:src="@drawable/ic_go"
+        app:layout_constraintBottom_toBottomOf="@id/view_principal"
+        app:layout_constraintEnd_toStartOf="@+id/id_sair"
+        app:layout_constraintStart_toEndOf="@+id/id_perfil"
+        app:layout_constraintTop_toTopOf="@+id/view_principal" />
+
+
+    <ImageView
+        android:id="@+id/id_sair"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="30dp"
+        android:contentDescription="@string/todo"
+        android:src="@drawable/ic_loggout"
+        app:layout_constraintBottom_toBottomOf="@id/view_principal"
+        app:layout_constraintEnd_toEndOf="@id/view_principal"
+        app:layout_constraintTop_toTopOf="@+id/view_principal" />
+
+
 
 
 
@@ -304,3 +308,4 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

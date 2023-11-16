@@ -2,10 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <meta-data
-        android:name="com.google.android.geo.API_KEY"
-        android:value="${MAPS_API_KEY}" />
-
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -14,17 +10,20 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/img_logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AbasteceAqui"
         tools:targetApi="31">
         <activity
+            android:name=".MainActivity_custo"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity_navigation"
             android:exported="false" />
         <activity
-            android:name=".MainActivity_Map"
+            android:name=".MainActivity_splash"
             android:exported="false" />
         <activity
             android:name=".MainActivity_posto"
@@ -42,7 +41,7 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity_splash"
+            android:name=".MainActivity_Map"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
