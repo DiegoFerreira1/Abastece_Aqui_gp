@@ -50,4 +50,11 @@
     <string name="diesel_comum">Diesel Comum</string>
     <string name="diesel_s10">Diesel S10</string>
 
+    <string name="text_1">Alcool ou Gasolina?</string>
+    <string name="text_2">Saiba a melhor opção para abastecer seu carro!</string>
+    <string name="text_alcool">Preço Álcool. ex: 1.90</string>
+    <string name="text_gasolina">Preço Gasolina. ex: 2.90</string>
+    <string name="text_calcular">CALCULAR</string>
+    <string name="text_resultado">RESULTADO</string>
+
 </resources>

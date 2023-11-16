@@ -57,7 +57,7 @@ public class MainActivity_Map extends AppCompatActivity {
     private MapView mapView;
     private MyLocationNewOverlay myLocationOverlay;
     private ImageButton bt_busca_cidade;
-    private ImageView bt_exit, bt_go;
+    private ImageView bt_exit, bt_go, bt_custo, bt_postos, bt_perfil;
     private Button bt_favorite;
     private static final int REQUEST_LOCATION_PERMISSION = 1;
     private FirebaseAuth mAuth;
@@ -101,6 +101,36 @@ public class MainActivity_Map extends AppCompatActivity {
                 finish();
             }
         });
+
+        //Botão para listar os postos
+        bt_postos = findViewById(R.id.id_postos);
+        bt_postos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Criar Recycle view dos postos existentes
+            }
+        });
+
+        //Botão para ver o perfil
+        bt_perfil = findViewById(R.id.id_perfil);
+        bt_perfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Criar tela de perfil
+            }
+        });
+
+        //Botão para verificar melhor opção
+        bt_custo = findViewById(R.id.id_custo);
+        bt_custo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity_Map.this, MainActivity_custo.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
 
         // Inicializar o mapa
         Configuration.getInstance().load(getApplicationContext(), getPreferences(MODE_PRIVATE));
