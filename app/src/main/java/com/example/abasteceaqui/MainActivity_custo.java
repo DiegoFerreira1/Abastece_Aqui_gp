@@ -3,6 +3,7 @@ package com.example.abasteceaqui;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +14,7 @@ public class MainActivity_custo extends AppCompatActivity {
 
     private EditText editPrecoAlcool;
     private EditText editprecoGasolina;
-    private TextView textResultado;
+    private TextView textResultado, textVoltar;
     private Button bt_resultado;
 
     @SuppressLint("MissingInflatedId")
@@ -25,12 +26,21 @@ public class MainActivity_custo extends AppCompatActivity {
         editPrecoAlcool = findViewById(R.id.id_alcool);
         editprecoGasolina = findViewById(R.id.id_gasolina);
         textResultado = findViewById(R.id.id_resultado);
+        textVoltar = findViewById(R.id.id_voltar);
 
         bt_resultado = findViewById(R.id.id_bt_calcular);
         bt_resultado.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 calcularpreco(v);
+            }
+        });
+
+        textVoltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity_custo.this, MainActivity_Map.class );
+                startActivity(intent);
             }
         });
 

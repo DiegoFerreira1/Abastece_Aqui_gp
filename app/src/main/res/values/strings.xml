@@ -56,5 +56,6 @@
     <string name="text_gasolina">Preço Gasolina. ex: 2.90</string>
     <string name="text_calcular">CALCULAR</string>
     <string name="text_resultado">RESULTADO</string>
+    <string name="voltar">VOLTAR</string>
 
 </resources>
